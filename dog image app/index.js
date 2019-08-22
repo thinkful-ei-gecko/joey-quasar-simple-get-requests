@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 function getRandomImages(number) {
   fetch(`https://dog.ceo/api/breeds/image/random/${number}`)
     .then(response => response.json())
@@ -9,13 +7,17 @@ function getRandomImages(number) {
 }
 
 function handleImageRequest() {
-  $('.js-number-entry-submit').click( e => {
+  $('.js-number-entry-submit').on('click keypress', e => {
     
     $('.js-dog-gallery').html('');
     e.preventDefault();
     const number = $('.js-number-images-entry').val();
     console.log(`number of images: ${number}`);
-    getRandomImages(number);
+    if (number > 50 || number < 1) {
+      alert('Enter a number between 1 and 50');
+    } else {
+      getRandomImages(number);
+    }
   });
 }
 

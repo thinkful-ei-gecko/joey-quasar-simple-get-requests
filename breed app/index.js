@@ -1,12 +1,20 @@
 'use strict';
 
-
-
 function getDogBreed(breed) {
   fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
     .then(response => response.json())
-    .then(responseJson => displayImage(responseJson))
-    .catch(error =>alert(error));
+    .then(responseJson => {
+      validateBreed(responseJson);
+      console.log(responseJson);
+    });
+}
+
+function validateBreed(data) {
+  if (data.status === 'error') {
+    alert(`Error: ${data.code}. Breed not valid.`);
+  } else {
+    displayImage(data);
+  }
 }
 
 function handleImageRequest() {
